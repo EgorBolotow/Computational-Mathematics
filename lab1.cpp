@@ -2,20 +2,6 @@
 #include <fstream>
 using namespace std;
 
-int max(double **m, int index, int size)
-{
-	int j, d;
-	int max = -2100000000;
-	for (j = 0; j < size; ++j) {
-		if (m[j][index] > max) {
-			max = m[j][index];
-			d = j;
-		}	
-	}
-	
-	return d;
-}
-
 int main()
 {
 	int i, j, n = 0;
