@@ -1,0 +1,79 @@
+#include <iostream>
+#include <cmath>
+using namespace std;
+
+double const h=0.1;
+double a=0; double b=1;
+double n=(b-a)/h;
+
+double F(double x, double y){
+        return x+y;
+}
+  
+  
+void Eiler() {
+    
+        double X[(int)n]; double Y[(int)n];
+        X[0]=0; Y[0]=1;
+        for(int i=1; i<=n; i++){
+                X[i]=X[i-1]+h;
+                Y[i]=Y[i-1]+h*F(X[i-1],Y[i-1]);
+        }
+        for(int i=0; i<=n; i++){
+                cout << "Y["<<i<<"]="<<Y[i] << " ";
+                cout << "\n";
+        }
+}
+
+void KoshiEiler() {
+    
+        double X[(int)n];
+        double Y1[(int)n];
+        double Y[(int)n];
+        //calculate
+        X[0]=0; Y[0]=1;
+        for(int i=1; i<=n; i++){
+                X[i]=X[i-1]+h;
+                Y1[i]=Y[i-1]+h*F(X[i-1],Y[i-1]);
+                Y[i]=Y[i-1]+h*(F(X[i-1],Y[i-1])+F(X[i],Y1[i]))/2.0;
+        }
+        for(int i=0; i<=n; i++){
+                cout << "Y["<<i<<"]="<<Y[i] << " ";
+                cout << "\n";
+        }
+}
+
+void RungeCutt() {
+        double X[(int)n];
+        double K1[(int)n];
+        double K2[(int)n];
+        double K3[(int)n];
+        double K4[(int)n];
+        double Y[(int)n];
+        X[0]=0; Y[0]=1;
+        for(int i=1; i<=n; i++){
+                X[i]=X[i-1]+h;
+                K1[i]=h*F(X[i-1],Y[i-1]);
+                K2[i]=h*F(X[i-1]+h/2,Y[i-1]+K1[i]/2);
+                K3[i]=h*F(X[i-1]+h/2,Y[i-1]+K2[i]/2);
+                K4[i]=h*F(X[i-1]+h,Y[i-1]+K3[i]);
+                Y[i]=Y[i-1]+(K1[i]+2*K2[i]+2*K3[i]+K4[i])/6;
+        }
+        cout << endl;
+        for(int i=0; i<=n; i++){
+                cout << "Y["<<i<<"]="<<Y[i] << " ";
+                cout << "\n";
+        }
+}
+
+int main() {
+    cout << "РунгеКутт";
+       RungeCutt();
+        cout << "\n\n";
+        cout << "Эйлер\n";
+       Eiler();
+        cout << "\n\n";
+        cout << "КошиЭйлер\n";
+       KoshiEiler();
+        return 0;
+}
